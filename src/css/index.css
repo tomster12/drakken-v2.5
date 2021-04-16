@@ -1,0 +1,11 @@
+
+html, body {
+  border: 0px;
+  margin: 0px;
+}
+
+
+#defaultCanvas0 {
+  display: block;
+  margin: 100px auto 0px auto;
+}

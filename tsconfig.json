@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "watch": true,
-    "rootDir": "src",
-    "outDir": "public"
+    "module": "es6",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true
   }
 }
