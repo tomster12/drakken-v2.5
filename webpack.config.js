@@ -12,11 +12,12 @@ module.exports = {
     filename: "index.js"
   },
 
+  resolve: { extensions: [ ".ts" ]},
   module: {
     rules: [
       { test: /\.tsx?$/i, use: "ts-loader" },
-      { test: /\.css$/i, use: [ "style-loader", "css-loader" ]}
-      { test: /\.(png|jpg|jpeg)$/i, type: 'asset/resource' },
+      { test: /\.css$/i, use: [ "style-loader", "css-loader" ]},
+      { test: /\.(png|jpg|jpeg)$/i, type: 'asset/resource' }
     ]
   }
 };
