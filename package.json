@@ -4,14 +4,25 @@
   "description": "Rework of iteration 2, using typescript and hopefully more future proof coding practices.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "wp": "webpack",
+    "wpw": "webpack --watch",
+    "serve": "node server.js"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
+    "typescript": "^4.2.4",
+    "@types/p5": "^0.9.1",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0",
+    "css-loader": "^5.2.2",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.1.0",
+    "path": "^0.12.7",
     "fs": "0.0.1-security",
-    "http": "0.0.1-security",
-    "path": "^0.12.7"
+    "http": "0.0.1-security"
+  },
+  "dependencies": {
+    "p5": "^1.3.1"
   }
 }
