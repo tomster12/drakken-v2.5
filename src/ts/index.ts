@@ -1,10 +1,11 @@
 
 // Imports
-import "../css/index.css";
+import "../index.css";
 import * as p5 from "p5";
-import { HistoryCanvas, historyCanvasFunc } from "./History/HistoryCanvas";
-import { GameCanvas, gameCanvasFunc } from "./Game/GameCanvas";
-import { ChatCanvas, chatCanvasFunc } from "./Chat/ChatCanvas";
+import { HistoryCanvas, historyCanvasFunc } from "./history/HistoryCanvas";
+import { GameCanvas, gameCanvasFunc } from "./game/GameCanvas";
+import { ChatCanvas, chatCanvasFunc } from "./chat/ChatCanvas";
+
 
 // Declare variables
 let canvasContainer: HTMLElement;
@@ -13,7 +14,7 @@ let gameCanvas: GameCanvas;
 let chatCanvas: ChatCanvas;
 
 
-// Initialize variables
+// Initialize canvases
 canvasContainer = document.getElementById("canvasContainer");
 historyCanvas = new p5(historyCanvasFunc, canvasContainer) as HistoryCanvas;
 gameCanvas = new p5(gameCanvasFunc, canvasContainer) as GameCanvas;
