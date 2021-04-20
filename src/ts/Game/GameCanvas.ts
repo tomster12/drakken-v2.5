@@ -4,7 +4,6 @@ import Canvas from "../Canvas";
 import Input from "../Input";
 import State from "./State";
 import MenuState from "./MenuState";
-import TestState from "./TestState";
 
 
 // Canvas interface
@@ -19,18 +18,18 @@ export function gameCanvasFunc(cv: GameCanvas) {
 
   cv.setup = function() {
     // Setup canvas
-    cv.createCanvas(400, 800);
+    cv.createCanvas(800, 800);
     cv.textSize(25);
     cv.fill(255);
     cv.noStroke();
 
     // Initialize variables
     cv.in = new Input(cv);
+    cv.focused = false;
     cv.states = [];
 
     // Populate states
     cv.states.push(new MenuState(cv));
-    cv.states.push(new TestState(cv));
   }
 
 
@@ -40,7 +39,8 @@ export function gameCanvasFunc(cv: GameCanvas) {
 
       // Get, then draw current state
       let currentState = cv.states[cv.states.length - 1];
-      currentState.draw();
+      currentState.update();
+      currentState.show();
 
       // Pop top state if requested
       if (currentState.toPop) cv.states.pop();

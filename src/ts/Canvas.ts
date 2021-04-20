@@ -8,4 +8,5 @@ import Input from "./Input";
 export default interface Canvas extends p5 {
 
   in: Input;
+  focused: boolean;
 }

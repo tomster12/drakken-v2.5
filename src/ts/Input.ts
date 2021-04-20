@@ -1,7 +1,9 @@
 
+// imports
 import Canvas from "./Canvas";
 
 
+// Storage for keys / mouse booleans
 type InputStorage = {
   pressed: { [name: number]: boolean },
   held: { [name: number]: boolean }
@@ -10,6 +12,7 @@ type InputStorage = {
 
 export default class Input {
 
+  // Declare variables
   keys: InputStorage;
   mouse: InputStorage;
 
