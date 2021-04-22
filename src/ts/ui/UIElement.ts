@@ -1,6 +1,6 @@
 
 import Canvas from "../Canvas";
-import Vec2 from "../Vec2";
+import Vec2 from "../utility/Vec2";
 
 
 export type Bounds = {

@@ -1,7 +1,8 @@
 
 // Imports
+import AssetManager from "../AssetManager";
 import Canvas from "../Canvas";
-import Input from "../Input";
+import Input from "../utility/Input";
 import State from "./State";
 import MenuState from "./MenuState";
 
@@ -18,10 +19,11 @@ export function gameCanvasFunc(cv: GameCanvas) {
 
   cv.setup = function() {
     // Setup canvas
-    cv.createCanvas(800, 800);
+    cv.createCanvas(1000, 800);
     cv.textSize(25);
     cv.fill(255);
     cv.noStroke();
+    cv.textFont(AssetManager.instance.getFont("main"));
 
     // Initialize variables
     cv.in = new Input(cv);
@@ -34,6 +36,8 @@ export function gameCanvasFunc(cv: GameCanvas) {
 
 
   cv.draw = function() {
+    cv.element.style.cursor = "default";
+
     // Check if there are states
     if (cv.states.length > 0) {
 

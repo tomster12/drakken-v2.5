@@ -17,7 +17,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.css$/i, use: [ "style-loader", "css-loader" ]},
-      { test: /\.(png|jpg)$/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|ico|ttf)$/i, type: 'asset/resource' },
       { test: /\.tsx?$/i, use: "ts-loader" }
     ]
   },
@@ -25,7 +25,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/template.html",
-      favicon: "./src/favicon.ico"
+      favicon: "./src/assets/favicon.ico"
     })
   ]
 };

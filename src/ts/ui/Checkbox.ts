@@ -2,57 +2,50 @@
 // Imports
 import * as p5 from "p5";
 import Canvas from "../Canvas";
-import Vec2 from "../Vec2";
-import Theming from "../Theming";
+import Vec2 from "../utility/Vec2";
+import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
 // Constructor parameters
-interface ButtonOptions {
+interface CheckboxOptions {
   cv: Canvas;
-  func: () => void;
 
   pos: Vec2;
-  size: Vec2;
+  size: number;
   align?: p5.CORNER | p5.CENTER;
-  text?: string;
   col?: string;
   highlightCol?: string;
-  textCol?: string;
 }
 
 
-export default class Button implements UIElement {
+export default class Checkbox implements UIElement {
 
   // Declare variables
   cv: Canvas;
-  func: () => void;
 
   pos: Vec2;
-  size: Vec2;
+  size: number;
   align: p5.CORNER | p5.CENTER;
-  text: string;
   col: string;
   highlightCol: string;
-  textCol: string;
 
   highlighted: boolean;
+  selected: boolean;
 
 
-  constructor(opt: ButtonOptions) {
+  constructor(opt: CheckboxOptions) {
     // Init variables
     this.cv = opt.cv;
-    this.func = opt.func;
 
     this.pos = opt.pos;
     this.size = opt.size;
     this.align = opt.align || this.cv.CENTER;
-    this.text = opt.text || "";
-    this.col = opt.col || Theming.PRIMARY;
-    this.highlightCol = opt.highlightCol || Theming.PRIMARY_HIGHLIGHT;
-    this.textCol = opt.textCol || Theming.LIGHT_TEXT;
+    this.col = opt.col || Theming.BORDER;
+    this.highlightCol = opt.highlightCol || Theming.BORDER_HIGHLIGHT;
 
     this.highlighted = false;
+    this.selected = false;
   }
 
 
@@ -61,7 +54,10 @@ export default class Button implements UIElement {
     this.highlighted = this.isOntop(this.cv.mouseX, this.cv.mouseY);
 
     // Clicked on this
-    if (this.highlighted && this.cv.in.mouse.pressed[this.cv.LEFT]) this.func();
+    if (this.highlighted && this.cv.in.mouse.pressed[this.cv.LEFT]) this.selected = !this.selected;
+
+    // Update cursor
+    if (this.highlighted) this.cv.element.style.cursor = "pointer";
   }
 
 
@@ -69,21 +65,31 @@ export default class Button implements UIElement {
     let bounds = this.getBounds();
 
     // Draw as rect
-    this.cv.noStroke();
-    if (this.highlighted)
-      this.cv.fill(this.highlightCol);
-    else this.cv.fill(this.col);
+    this.cv.strokeWeight(2);
+    this.cv.stroke(this.col);
+    this.cv.noFill();
     this.cv.rect(bounds.pos.x, bounds.pos.y, bounds.size.x, bounds.size.y);
+    this.cv.strokeWeight(1);
 
-    // Draw text ontop
-    this.cv.fill(this.textCol);
-    this.cv.textSize(25);
-    this.cv.textAlign(this.cv.CENTER, this.cv.CENTER);
-    this.cv.text(
-      this.text,
+
+    // Draw indicator at centre
+    this.cv.noStroke();
+
+    if (this.selected) {
+      if (this.highlighted)
+        this.cv.fill(this.highlightCol);
+      else this.cv.fill(this.col);
+
+    } else if (this.highlighted)
+      this.cv.fill(this.highlightCol + "9d");
+
+    this.cv.ellipse(
       bounds.pos.x + bounds.size.x * 0.5,
-      bounds.pos.y + bounds.size.y * 0.5);
+      bounds.pos.y + bounds.size.x * 0.5,
+      bounds.size.x * 0.6,
+      bounds.size.y * 0.6);
   }
+
 
 
   isOntop(x: number, y: number): boolean {
@@ -101,14 +107,14 @@ export default class Button implements UIElement {
     if (this.align == this.cv.CORNER) {
       return {
         pos: this.pos,
-        size: this.size
+        size: new Vec2(this.size)
       }
 
     // Position represents centre
     } else if (this.align == this.cv.CENTER) {
       return {
-        pos: this.pos.sub(this.size.scale(0.5)),
-        size: this.size
+        pos: this.pos.sub(new Vec2(this.size * 0.5)),
+        size: new Vec2(this.size)
       };
     }
   }

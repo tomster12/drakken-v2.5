@@ -2,8 +2,8 @@
 // Imports
 import * as p5 from "p5";
 import Canvas from "../Canvas";
-import Vec2 from "../Vec2";
-import Theming from "../Theming";
+import Vec2 from "../utility/Vec2";
+import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
@@ -81,6 +81,9 @@ export default class Checkbox implements UIElement {
         0, 1);
       this.value = this.cv.min(this.cv.max(value, 0), 1);
     }
+
+    // Update cursor
+    if (this.highlighted && !this.selected) this.cv.element.style.cursor = "pointer";
   }
 
 

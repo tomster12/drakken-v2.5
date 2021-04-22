@@ -1,9 +1,10 @@
 
 // Imports
 import * as p5 from "p5";
+import AssetManager from "../AssetManager";
 import Canvas from "../Canvas";
-import Vec2 from "../Vec2";
-import Theming from "../Theming";
+import Vec2 from "../utility/Vec2";
+import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
