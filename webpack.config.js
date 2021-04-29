@@ -17,7 +17,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.css$/i, use: [ "style-loader", "css-loader" ]},
-      { test: /\.(png|jpg|ico|ttf)$/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|ico|ttf|mp3)$/i, type: 'asset/resource' },
       { test: /\.tsx?$/i, use: "ts-loader" }
     ]
   },

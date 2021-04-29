@@ -2,6 +2,7 @@
 // Imports
 import * as p5 from "p5";
 import AssetManager from "../AssetManager";
+import SoundManager from "../SoundManager";
 import Canvas from "../Canvas";
 import Vec2 from "../utility/Vec2";
 import Theming from "../utility/Theming";
@@ -78,7 +79,11 @@ export default class TextInput implements UIElement {
     this.highlighted = this.isOntop(this.cv.mouseX, this.cv.mouseY);
 
     // Clicked on this
-    if (this.cv.in.mouse.pressed[this.cv.LEFT]) this.selected = this.highlighted;
+    if (this.cv.in.mouse.pressed[this.cv.LEFT]) {
+      if (this.highlighted && !this.selected)
+        SoundManager.instance.playSound("sfx", "click0");
+      this.selected = this.highlighted;
+    }
 
 
     // Default timer to max
@@ -143,6 +148,7 @@ export default class TextInput implements UIElement {
     if (this.selected) out += (this.inputTimer[0] > (this.inputTimer[1] * 0.5)) ? "_" : " ";
     let outWidth = this.output.textWidth(out.substring(0, out.length - 1));
     this.output.text(out, 4 - this.cv.max(outWidth - this.length + 12 + this.output.textWidth("_"), 0), bounds.size.y - 4);
+    this.cv.imageMode(this.cv.CORNER);
     this.cv.image(this.output, bounds.pos.x, bounds.pos.y);
 
     // Draw outline overtop

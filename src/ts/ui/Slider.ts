@@ -1,5 +1,6 @@
 
 // Imports
+import SoundManager from "../SoundManager";
 import * as p5 from "p5";
 import Canvas from "../Canvas";
 import Vec2 from "../utility/Vec2";
@@ -12,6 +13,8 @@ interface CheckboxOptions {
   cv: Canvas;
 
   pos: Vec2;
+  changedFunc?: (value: number) => void;
+  value?: number;
   align?: p5.LEFT | p5.CENTER;
   length: number;
   barSize: number;
@@ -29,6 +32,7 @@ export default class Checkbox implements UIElement {
   cv: Canvas;
 
   pos: Vec2;
+  changedFunc?: (value: number) => void;
   align: p5.LEFT | p5.CENTER;
   length: number;
   barSize: number;
@@ -48,6 +52,7 @@ export default class Checkbox implements UIElement {
     this.cv = opt.cv;
 
     this.pos = opt.pos;
+    this.changedFunc = opt.changedFunc;
     this.align = opt.align || this.cv.LEFT;
     this.length = opt.length;
     this.barSize = opt.barSize;
@@ -59,7 +64,7 @@ export default class Checkbox implements UIElement {
 
     this.highlighted = false;
     this.selected = false;
-    this.value = 0;
+    this.value = opt.value || 0;
   }
 
 
@@ -70,8 +75,10 @@ export default class Checkbox implements UIElement {
     this.highlighted = this.isOntop(this.cv.mouseX, this.cv.mouseY);
 
     // Clicked on this
-    if (this.highlighted && this.cv.in.mouse.pressed[this.cv.LEFT]) this.selected = true;
-    else if (!this.cv.in.mouse.held[this.cv.LEFT]) this.selected = false;
+    if (this.highlighted && this.cv.in.mouse.pressed[this.cv.LEFT]) {
+      this.selected = true;
+      SoundManager.instance.playSound("sfx", "click0");
+    } else if (!this.cv.in.mouse.held[this.cv.LEFT]) this.selected = false;
 
     // Move nob
     if (this.selected) {
@@ -80,6 +87,7 @@ export default class Checkbox implements UIElement {
         bounds.pos.x + this.nobSize * 0.5 + this.length,
         0, 1);
       this.value = this.cv.min(this.cv.max(value, 0), 1);
+      this?.changedFunc(this.value);
     }
 
     // Update cursor

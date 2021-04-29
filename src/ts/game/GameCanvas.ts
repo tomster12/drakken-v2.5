@@ -4,7 +4,7 @@ import AssetManager from "../AssetManager";
 import Canvas from "../Canvas";
 import Input from "../utility/Input";
 import State from "./State";
-import MenuState from "./MenuState";
+import BottomState from "./BottomState";
 
 
 // Canvas interface
@@ -31,23 +31,26 @@ export function gameCanvasFunc(cv: GameCanvas) {
     cv.states = [];
 
     // Populate states
-    cv.states.push(new MenuState(cv));
+    cv.states.push(new BottomState(cv));
   }
 
 
   cv.draw = function() {
-    cv.element.style.cursor = "default";
+    // Check to make sure fully initialized
+    if (cv.element != null) {
+      cv.element.style.cursor = "default";
 
-    // Check if there are states
-    if (cv.states.length > 0) {
+      // Check if there are states
+      if (cv.states.length > 0) {
 
-      // Get, then draw current state
-      let currentState = cv.states[cv.states.length - 1];
-      currentState.update();
-      currentState.show();
+        // Get, then draw current state
+        let currentState = cv.states[cv.states.length - 1];
+        currentState.update();
+        currentState.show();
 
-      // Pop top state if requested
-      if (currentState.toPop) cv.states.pop();
+        // Pop top state if requested
+        if (currentState.toPop) cv.states.pop();
+      }
     }
   }
 }

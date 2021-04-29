@@ -1,5 +1,6 @@
 
 // Imports
+import SoundManager from "../SoundManager";
 import { GameCanvas } from "./GameCanvas";
 import State from "./State";
 import Theming from "../utility/Theming";
@@ -34,14 +35,16 @@ export default class SettingsState extends State {
     }));
 
     this.UIElements.push(new Textbox({ cv: this.cv,
-      pos: new Vec2(50, this.cv.height * 0.5 - 220),
-      size: new Vec2(380, 110),
-      align: this.cv.CORNER,
-      text: "This is a test of a longer sentence with multiple spaces used standardly and checking whether it splits the text correctly.",
+      pos: new Vec2(200, this.cv.height * 0.5 - 220),
+      size: new Vec2(200, 50),
+      align: this.cv.CENTER,
+      text: "Global",
       textSize: 25
     }));
     this.UIElements.push(new Slider({ cv: this.cv,
-      pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 185),
+      pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 220),
+      changedFunc: (value) => { SoundManager.instance.setVolumePct("global", value); },
+      value: SoundManager.instance.getVolumePct("global"),
       length: 220,
       barSize: 10,
       nobSize: 20,
@@ -50,27 +53,39 @@ export default class SettingsState extends State {
     }));
 
     this.UIElements.push(new Textbox({ cv: this.cv,
-      pos: new Vec2(50, this.cv.height * 0.5 - 60),
-      size: new Vec2(520, 80),
-      align: this.cv.CORNER,
-      text: "This is a test of a longer sentence with multiple spaces used standardly and checking whether it splits the text correctly.",
+      pos: new Vec2(200, this.cv.height * 0.5 - 170),
+      size: new Vec2(200, 50),
+      align: this.cv.CENTER,
+      text: "Music",
       textSize: 25
     }));
-    this.UIElements.push(new Checkbox({ cv: this.cv,
-      pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 25),
-      size: 35,
+    this.UIElements.push(new Slider({ cv: this.cv,
+      pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 170),
+      changedFunc: (value) => { SoundManager.instance.setVolumePct("music", value); },
+      value: SoundManager.instance.getVolumePct("music"),
+      length: 220,
+      barSize: 10,
+      nobSize: 20,
+      align: this.cv.CENTER,
+      range: [30, 150]
     }));
 
     this.UIElements.push(new Textbox({ cv: this.cv,
-      pos: new Vec2(50, this.cv.height * 0.5 + 100),
-      size: new Vec2(390, 80),
-      align: this.cv.CORNER,
-      text: "This is a test of a longer sentence with multiple spaces used standardly and checking whether it splits the text correctly.",
+      pos: new Vec2(200, this.cv.height * 0.5 - 120),
+      size: new Vec2(200, 50),
+      align: this.cv.CENTER,
+      text: "sfx",
       textSize: 25
     }));
-    this.UIElements.push(new TextInput({ cv: this.cv,
-      pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 + 145),
-      length: 220
+    this.UIElements.push(new Slider({ cv: this.cv,
+      pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 120),
+      changedFunc: (value) => { SoundManager.instance.setVolumePct("sfx", value); },
+      value: SoundManager.instance.getVolumePct("sfx"),
+      length: 220,
+      barSize: 10,
+      nobSize: 20,
+      align: this.cv.CENTER,
+      range: [30, 150]
     }));
   }
 

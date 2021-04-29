@@ -1,6 +1,6 @@
 
 // Imports
-import AssetManager from "../AssetManager";
+import SoundManager from "../SoundManager";
 import { GameCanvas } from "./GameCanvas";
 import State from "./State";
 import RoomState from "./RoomState";
@@ -10,7 +10,6 @@ import Theming from "../utility/Theming";
 import Vec2 from "../utility/Vec2";
 import { UIElement } from "../ui/UIElement";
 import Button from "../ui/Button";
-import Sprite from "../ui/Sprite";
 
 
 export default class MenuState extends State {
@@ -45,11 +44,8 @@ export default class MenuState extends State {
       text: "Help"
     }));
 
-    this.UIElements.push(new Sprite({ cv: this.cv,
-      pos: new Vec2(this.cv.width * 0.5 - 300, this.cv.height * 0.5),
-      size: new Vec2(150, 150),
-      image: AssetManager.instance.getImage("pog")
-    }));
+    // Start music
+    SoundManager.instance.loopSound("music", "main");
   }
 
 

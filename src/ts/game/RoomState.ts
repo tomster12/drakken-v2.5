@@ -1,11 +1,15 @@
 
 // Imports
+import tokenData from "../../assets/tokenData";
+import AssetManager from "../AssetManager";
+import SoundManager from "../SoundManager";
 import { GameCanvas } from "./GameCanvas";
 import State from "./State";
 import Theming from "../utility/Theming";
 import Vec2 from "../utility/Vec2";
 import { UIElement } from "../ui/UIElement";
 import Button from "../ui/Button";
+
 
 export default class RoomState extends State {
 
@@ -48,5 +52,27 @@ export default class RoomState extends State {
 
     // Show UIElements
     for (let button of this.UIElements) button.show();
+
+    // DEBUG Draw tokens
+    let i = 0;
+    for (let token of tokenData.tokens.neutral.common) {
+      let name = "neutral/common/" + token.name;
+
+      this.cv.imageMode(this.cv.CENTER);
+      this.cv.image(AssetManager.instance.getImage(name),
+        this.cv.width * 0.5,
+        this.cv.height * 0.25 + 120 * i,
+        80, 80);
+
+      this.cv.textSize(20);
+      this.cv.fill(Theming.DARK_TEXT);
+      this.cv.textAlign(this.cv.CENTER);
+      this.cv.text(token.name + ": " + token.description,
+        this.cv.width * 0.5,
+        this.cv.height * 0.25 + 120 * i - 70,
+      );
+
+      i += 1;
+    }
   }
 }
