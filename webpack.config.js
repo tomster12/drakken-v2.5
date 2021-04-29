@@ -17,14 +17,15 @@ module.exports = {
   module: {
     rules: [
       { test: /\.css$/i, use: [ "style-loader", "css-loader" ]},
-      { test: /\.(png|jpg)$/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|ico|ttf|mp3)$/i, type: 'asset/resource' },
       { test: /\.tsx?$/i, use: "ts-loader" }
     ]
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/template.html"
+      template: "./src/template.html",
+      favicon: "./src/assets/favicon.ico"
     })
   ]
 };

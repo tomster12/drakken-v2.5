@@ -1,9 +1,10 @@
 
 // Imports
+import SoundManager from "../SoundManager";
 import * as p5 from "p5";
 import Canvas from "../Canvas";
-import Vec2 from "../Vec2";
-import Theming from "../Theming";
+import Vec2 from "../utility/Vec2";
+import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
@@ -61,7 +62,13 @@ export default class Button implements UIElement {
     this.highlighted = this.isOntop(this.cv.mouseX, this.cv.mouseY);
 
     // Clicked on this
-    if (this.highlighted && this.cv.in.mouse.pressed[this.cv.LEFT]) this.func();
+    if (this.highlighted && this.cv.in.mouse.pressed[this.cv.LEFT]) {
+      SoundManager.instance.playSound("sfx", "click0");
+      this.func();
+    }
+
+    // Update cursor
+    if (this.highlighted) this.cv.element.style.cursor = "pointer";
   }
 
 

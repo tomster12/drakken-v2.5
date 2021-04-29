@@ -1,9 +1,11 @@
 
 // Imports
 import * as p5 from "p5";
+import AssetManager from "../AssetManager";
+import SoundManager from "../SoundManager";
 import Canvas from "../Canvas";
-import Vec2 from "../Vec2";
-import Theming from "../Theming";
+import Vec2 from "../utility/Vec2";
+import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
@@ -19,6 +21,7 @@ interface TextboxOptions {
   outlineCol?: string;
   outlineHiglightCol?: string;
   textCol?: string;
+  textFont?: p5.Font;
 }
 
 
@@ -35,6 +38,7 @@ export default class TextInput implements UIElement {
   outlineCol: string;
   outlineHiglightCol: string;
   textCol: string;
+  textFont: p5.Font;
 
   text: string;
   highlighted: boolean;
@@ -56,12 +60,13 @@ export default class TextInput implements UIElement {
     this.outlineCol = opt.outlineCol || Theming.BORDER;
     this.outlineHiglightCol = opt.outlineHiglightCol || Theming.BORDER_HIGHLIGHT;
     this.textCol = opt.textCol || Theming.DARK_TEXT;
+    this.textFont = opt.textFont || AssetManager.instance.getFont("main");
 
     this.text = "";
     this.highlighted = false;
     this.selected = false;
     this.inputTimer = [0.0, 0.8];
-    this.deleteTimer = [0.0, 1.0];
+    this.deleteTimer = [0.0, 0.65];
 
     // Init graphics
     let bounds = this.getBounds();
@@ -74,10 +79,19 @@ export default class TextInput implements UIElement {
     this.highlighted = this.isOntop(this.cv.mouseX, this.cv.mouseY);
 
     // Clicked on this
-    if (this.cv.in.mouse.pressed[this.cv.LEFT]) this.selected = this.highlighted;
+    if (this.cv.in.mouse.pressed[this.cv.LEFT]) {
+      if (this.highlighted && !this.selected)
+        SoundManager.instance.playSound("sfx", "click0");
+      this.selected = this.highlighted;
+    }
+
+
+    // Default timer to max
+    if (!this.selected) {
+      this.inputTimer[0] = this.inputTimer[1];
 
     // Update input timer
-    if (this.selected) {
+    } else {
       if (this.inputTimer[0] < 0)
         this.inputTimer[0] = this.inputTimer[1];
       else this.inputTimer[0] -= 1.0 / 60.0;
@@ -86,11 +100,13 @@ export default class TextInput implements UIElement {
       let keys = Object.keys(this.cv.in.keys.pressed).filter((key) => this.cv.in.keys.pressed[key])
       for (let key of keys) {
 
-        // Delete
+
+        // Delete on backspace
         if (key == "8") {
           this.text = this.text.substr(0, this.text.length - 1);
 
-        // Add new key
+
+        // Add new key on other
         } else {
           let out = String.fromCharCode(parseInt(key)).toLowerCase();
           if (this.cv.in.keys.held[16]) out = out.toUpperCase();
@@ -98,15 +114,23 @@ export default class TextInput implements UIElement {
         }
       }
 
-      // Hold delete
-      if (this.cv.in.keys.held[8]) {
-        this.deleteTimer[0] -= 1 / 60;
-        if (this.deleteTimer[0] < 0)
-          this.text = this.text.substr(0, this.text.length - 1);
-      } else this.deleteTimer[0] = this.deleteTimer[1];
 
-    // Default to max
-    } else this.inputTimer[0] = this.inputTimer[1];
+      // Default timer to max
+      if (!this.cv.in.keys.held[8]) {
+        this.deleteTimer[0] = this.deleteTimer[1];
+
+      // Hold delete
+      } else {
+        this.deleteTimer[0] -= 1 / 60;
+        if (this.deleteTimer[0] < 0) {
+          this.text = this.text.substr(0, this.text.length - 1);
+        }
+      }
+    }
+
+
+    // Update cursor
+    if (this.highlighted) this.cv.element.style.cursor = "pointer";
   }
 
 
@@ -118,11 +142,13 @@ export default class TextInput implements UIElement {
     this.output.noStroke();
     this.output.fill(this.textCol);
     this.output.textSize(25);
+    this.output.textFont(this.textFont);
     this.output.textAlign(this.cv.LEFT, this.cv.BOTTOM);
     let out = this.text;
     if (this.selected) out += (this.inputTimer[0] > (this.inputTimer[1] * 0.5)) ? "_" : " ";
     let outWidth = this.output.textWidth(out.substring(0, out.length - 1));
     this.output.text(out, 4 - this.cv.max(outWidth - this.length + 12 + this.output.textWidth("_"), 0), bounds.size.y - 4);
+    this.cv.imageMode(this.cv.CORNER);
     this.cv.image(this.output, bounds.pos.x, bounds.pos.y);
 
     // Draw outline overtop

@@ -1,7 +1,8 @@
 
 // Imports
+import AssetManager from "../AssetManager";
 import Canvas from "../Canvas";
-import Input from "../Input";
+import Input from "../utility/Input";
 
 
 // Canvas interface
@@ -17,6 +18,7 @@ export function chatCanvasFunc(cv: ChatCanvas) {
     cv.textSize(25);
     cv.fill(255);
     cv.noStroke();
+    cv.textFont(AssetManager.instance.getFont("main"));
 
     // Initialize variables
     cv.in = new Input(cv);

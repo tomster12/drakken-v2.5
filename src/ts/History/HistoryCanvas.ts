@@ -1,15 +1,12 @@
 
 // Imports
-import * as p5 from "p5";
+import AssetManager from "../AssetManager";
 import Canvas from "../Canvas";
-import Input from "../Input";
-import testImg from "./test.jpg";
+import Input from "../utility/Input";
 
 
 // Canvas interface
-export interface HistoryCanvas extends Canvas {
-  testImg: p5.Image;
-}
+export interface HistoryCanvas extends Canvas { }
 
 
 // Canvas function
@@ -21,11 +18,11 @@ export function historyCanvasFunc(cv: HistoryCanvas) {
     cv.textSize(25);
     cv.fill(255);
     cv.noStroke();
+    cv.textFont(AssetManager.instance.getFont("main"));
 
     // Initialize variables
     cv.in = new Input(cv);
     cv.focused = false;
-    cv.testImg = cv.loadImage(testImg);
   }
 
 
@@ -41,8 +38,5 @@ export function historyCanvasFunc(cv: HistoryCanvas) {
       JSON.stringify(cv.in.keys.held).replace(/,/g, ",\n"),
       cv.width * 0.5, 50);
     cv.ellipse(cv.mouseX, cv.mouseY, 30, 30);
-
-    // Test image
-    cv.image(cv.testImg, 20, cv.height - 100, 80, 80);
   }
 }
