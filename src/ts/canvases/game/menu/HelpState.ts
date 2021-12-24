@@ -1,11 +1,11 @@
 
 // Imports
-import { GameCanvas } from "./GameCanvas";
-import State from "./State";
-import Theming from "../utility/Theming";
-import Vec2 from "../utility/Vec2";
-import { UIElement } from "../ui/UIElement";
-import Button from "../ui/Button";
+import { GameCanvas } from "./../GameCanvas";
+import State from "./../State";
+import Theming from "../../../utility/Theming";
+import Vec2 from "../../../utility/Vec2";
+import { UIElement } from "../../../UI/UIElement";
+import { UIButton } from "../../../UI/UIButton";
 
 
 export default class HelpState extends State {
@@ -21,7 +21,7 @@ export default class HelpState extends State {
     this.UIElements = [];
 
     // Populate UIElements
-    this.UIElements.push(new Button({ cv: this.cv,
+    this.UIElements.push(new UIButton({ cv: this.cv,
       func: () => { this.toPop = true; },
       pos: new Vec2(this.cv.width * 0.5, this.cv.height - 100),
       size: new Vec2(250, 90),

@@ -2,7 +2,7 @@
 // Imports
 import { GameCanvas } from "./GameCanvas";
 import State from "./State";
-import Theming from "../utility/Theming";
+import Theming from "../../utility/Theming";
 
 
 export default class LoadingState extends State {

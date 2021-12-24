@@ -1,33 +1,26 @@
 
 // Imports
-import SoundManager from "../SoundManager";
-import * as p5 from "p5";
-import Canvas from "../Canvas";
-import Vec2 from "../utility/Vec2";
+import { Canvas } from "../Canvas";
+import SoundManager from "../managers/SoundManager";
 import Theming from "../utility/Theming";
-import { Bounds, UIElement } from "./UIElement";
+import { UIRect_cfg, UIRect } from "./UIRect";
 
 
 // Constructor parameters
-interface CheckboxOptions {
+interface UICheckbox_cfg extends UIRect_cfg {
+
   cv: Canvas;
 
-  pos: Vec2;
-  size: number;
-  align?: p5.CORNER | p5.CENTER;
   col?: string;
   highlightCol?: string;
 }
 
 
-export default class Checkbox implements UIElement {
+export default class UICheckbox extends UIRect {
 
   // Declare variables
   cv: Canvas;
 
-  pos: Vec2;
-  size: number;
-  align: p5.CORNER | p5.CENTER;
   col: string;
   highlightCol: string;
 
@@ -35,13 +28,10 @@ export default class Checkbox implements UIElement {
   selected: boolean;
 
 
-  constructor(opt: CheckboxOptions) {
-    // Init variables
-    this.cv = opt.cv;
+  constructor(opt: UICheckbox_cfg) {
+    super(opt);
 
-    this.pos = opt.pos;
-    this.size = opt.size;
-    this.align = opt.align || this.cv.CENTER;
+    // Init variables
     this.col = opt.col || Theming.BORDER;
     this.highlightCol = opt.highlightCol || Theming.BORDER_HIGHLIGHT;
 
@@ -75,7 +65,6 @@ export default class Checkbox implements UIElement {
     this.cv.rect(bounds.pos.x, bounds.pos.y, bounds.size.x, bounds.size.y);
     this.cv.strokeWeight(1);
 
-
     // Draw indicator at centre
     this.cv.noStroke();
 
@@ -92,34 +81,5 @@ export default class Checkbox implements UIElement {
       bounds.pos.y + bounds.size.x * 0.5,
       bounds.size.x * 0.6,
       bounds.size.y * 0.6);
-  }
-
-
-
-  isOntop(x: number, y: number): boolean {
-    // Returns whether a point is overtop this button
-    let bounds = this.getBounds();
-    return ((x > bounds.pos.x)
-      && x < (bounds.pos.x + bounds.size.x)
-      && y > (bounds.pos.y)
-      && y < (bounds.pos.y + bounds.size.y));
-  }
-
-
-  getBounds(): Bounds {
-    // Position represents corner
-    if (this.align == this.cv.CORNER) {
-      return {
-        pos: this.pos,
-        size: new Vec2(this.size)
-      }
-
-    // Position represents centre
-    } else if (this.align == this.cv.CENTER) {
-      return {
-        pos: this.pos.sub(new Vec2(this.size * 0.5)),
-        size: new Vec2(this.size)
-      };
-    }
   }
 }

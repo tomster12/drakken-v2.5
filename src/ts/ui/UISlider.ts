@@ -1,15 +1,16 @@
 
 // Imports
-import SoundManager from "../SoundManager";
+import SoundManager from "../managers/SoundManager";
 import * as p5 from "p5";
-import Canvas from "../Canvas";
+import { Canvas } from "../Canvas";
 import Vec2 from "../utility/Vec2";
 import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
 // Constructor parameters
-interface CheckboxOptions {
+interface UICheckbox_cfg {
+
   cv: Canvas;
 
   pos: Vec2;
@@ -26,7 +27,7 @@ interface CheckboxOptions {
 }
 
 
-export default class Checkbox implements UIElement {
+export default class UICheckbox implements UIElement {
 
   // Declare variables
   cv: Canvas;
@@ -47,7 +48,7 @@ export default class Checkbox implements UIElement {
   value: number;
 
 
-  constructor(opt: CheckboxOptions) {
+  constructor(opt: UICheckbox_cfg) {
     // Init variables
     this.cv = opt.cv;
 

@@ -1,17 +1,14 @@
 
 // Imports
-import SoundManager from "../SoundManager";
-import { GameCanvas } from "./GameCanvas";
-import State from "./State";
-import Theming from "../utility/Theming";
-import Vec2 from "../utility/Vec2";
-import { UIElement } from "../ui/UIElement";
-import Button from "../ui/Button";
-import Checkbox from "../ui/Checkbox";
-import Slider from "../ui/Slider";
-import Textbox from "../ui/Textbox";
-import TextInput from "../ui/TextInput";
-
+import SoundManager from "../../../managers/SoundManager";
+import { GameCanvas } from "./../GameCanvas";
+import State from "./../State";
+import Theming from "../../../utility/Theming";
+import Vec2 from "../../../utility/Vec2";
+import { UIElement } from "../../../UI/UIElement";
+import { UIButton } from "../../../UI/UIButton";
+import UISlider from "../../../UI/UISlider";
+import UITextbox from "../../../UI/UITextbox";
 
 
 export default class SettingsState extends State {
@@ -27,21 +24,21 @@ export default class SettingsState extends State {
     this.UIElements = [];
 
     // Populate UIElements
-    this.UIElements.push(new Button({ cv: this.cv,
+    this.UIElements.push(new UIButton({ cv: this.cv,
       func: () => { this.toPop = true; },
       pos: new Vec2(this.cv.width * 0.5, this.cv.height - 100),
       size: new Vec2(250, 90),
       text: "Menu"
     }));
 
-    this.UIElements.push(new Textbox({ cv: this.cv,
+    this.UIElements.push(new UITextbox({ cv: this.cv,
       pos: new Vec2(200, this.cv.height * 0.5 - 220),
       size: new Vec2(200, 50),
       align: this.cv.CENTER,
       text: "Global",
       textSize: 25
     }));
-    this.UIElements.push(new Slider({ cv: this.cv,
+    this.UIElements.push(new UISlider({ cv: this.cv,
       pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 220),
       changedFunc: (value) => { SoundManager.instance.setVolumePct("global", value); },
       value: SoundManager.instance.getVolumePct("global"),
@@ -52,14 +49,14 @@ export default class SettingsState extends State {
       range: [30, 150]
     }));
 
-    this.UIElements.push(new Textbox({ cv: this.cv,
+    this.UIElements.push(new UITextbox({ cv: this.cv,
       pos: new Vec2(200, this.cv.height * 0.5 - 170),
       size: new Vec2(200, 50),
       align: this.cv.CENTER,
       text: "Music",
       textSize: 25
     }));
-    this.UIElements.push(new Slider({ cv: this.cv,
+    this.UIElements.push(new UISlider({ cv: this.cv,
       pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 170),
       changedFunc: (value) => { SoundManager.instance.setVolumePct("music", value); },
       value: SoundManager.instance.getVolumePct("music"),
@@ -70,14 +67,14 @@ export default class SettingsState extends State {
       range: [30, 150]
     }));
 
-    this.UIElements.push(new Textbox({ cv: this.cv,
+    this.UIElements.push(new UITextbox({ cv: this.cv,
       pos: new Vec2(200, this.cv.height * 0.5 - 120),
       size: new Vec2(200, 50),
       align: this.cv.CENTER,
       text: "sfx",
       textSize: 25
     }));
-    this.UIElements.push(new Slider({ cv: this.cv,
+    this.UIElements.push(new UISlider({ cv: this.cv,
       pos: new Vec2(this.cv.width - 200, this.cv.height * 0.5 - 120),
       changedFunc: (value) => { SoundManager.instance.setVolumePct("sfx", value); },
       value: SoundManager.instance.getVolumePct("sfx"),

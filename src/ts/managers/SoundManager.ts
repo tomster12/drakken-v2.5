@@ -59,7 +59,6 @@ export default class SoundManager {
   }
 
 
-
   playSound(typ: SoundType, name: string) {
     // Play a specific sound
     let sound = this.am.getSound(typ + "/" + name);

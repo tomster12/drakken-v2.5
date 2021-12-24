@@ -1,16 +1,16 @@
 
 // Imports
-import AssetManager from "../AssetManager";
-import Canvas from "../Canvas";
-import Input from "../utility/Input";
+import AssetManager from "../../managers/AssetManager";
+import { Canvas } from "../../Canvas";
+import Input from "../../utility/Input";
 
 
 // Canvas interface
-export interface ChatCanvas extends Canvas { }
+export interface HistoryCanvas extends Canvas { }
 
 
 // Canvas function
-export function chatCanvasFunc(cv: ChatCanvas) {
+export function historyCanvasFunc(cv: HistoryCanvas) {
 
   cv.setup = function() {
     // Setup canvas
@@ -30,7 +30,7 @@ export function chatCanvasFunc(cv: ChatCanvas) {
     cv.background(60);
 
     // Positional indicator ellipse
-    cv.ellipse(cv.width * 0.75, cv.height * 0.5, 60, 60);
+    cv.ellipse(cv.width * 0.25, cv.height * 0.5, 60, 60);
 
     // Current keys / mouse
     cv.textAlign(cv.CENTER);

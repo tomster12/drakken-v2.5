@@ -1,14 +1,14 @@
 
 // Imports
-import AssetManager from "../AssetManager";
-import Canvas from "../Canvas";
-import Input from "../utility/Input";
+import AssetManager from "../../managers/AssetManager";
+import { Canvas } from "../../Canvas";
+import Input from "../../utility/Input";
 import State from "./State";
 import BottomState from "./BottomState";
 
 
 // Canvas interface
-export interface GameCanvas extends Canvas {
+export class GameCanvas extends Canvas {
 
   states: State[];
 }

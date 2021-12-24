@@ -1,10 +1,11 @@
 
 // imports
-import Canvas from "../Canvas";
+import { Canvas } from "../Canvas";
 
 
 // Storage for keys / mouse booleans
 type InputStorage = {
+
   pressed: { [name: number]: boolean },
   held: { [name: number]: boolean }
 }

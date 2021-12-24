@@ -1,16 +1,16 @@
 
 // Imports
 import * as p5 from "p5";
-import AssetManager from "../AssetManager";
-import SoundManager from "../SoundManager";
-import Canvas from "../Canvas";
+import AssetManager from "../managers/AssetManager";
+import SoundManager from "../managers/SoundManager";
+import { Canvas } from "../Canvas";
 import Vec2 from "../utility/Vec2";
 import Theming from "../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 
 // Constructor parameters
-interface TextboxOptions {
+interface UITextbox_cfg {
   cv: Canvas;
 
   pos: Vec2;
@@ -18,14 +18,14 @@ interface TextboxOptions {
   align?: p5.CORNER | p5.CENTER;
   textSize?: number;
   backgroundCol?: string;
-  outlineCol?: string;
-  outlineHiglightCol?: string;
+  cvlineCol?: string;
+  cvlineHiglightCol?: string;
   textCol?: string;
   textFont?: p5.Font;
 }
 
 
-export default class TextInput implements UIElement {
+export default class UITextInput implements UIElement {
 
   // Declare variables
   cv: Canvas;
@@ -35,8 +35,8 @@ export default class TextInput implements UIElement {
   align: p5.CORNER | p5.CENTER;
   textSize: number;
   backgroundCol: string;
-  outlineCol: string;
-  outlineHiglightCol: string;
+  cvlineCol: string;
+  cvlineHiglightCol: string;
   textCol: string;
   textFont: p5.Font;
 
@@ -45,10 +45,10 @@ export default class TextInput implements UIElement {
   selected: boolean;
   inputTimer: number[];
   deleteTimer: number[];
-  output: p5.Graphics;
+  cvput: p5.Graphics;
 
 
-  constructor(opt: TextboxOptions) {
+  constructor(opt: UITextbox_cfg) {
     // Init variables
     this.cv = opt.cv;
 
@@ -57,8 +57,8 @@ export default class TextInput implements UIElement {
     this.align = opt.align || this.cv.CENTER;
     this.textSize = opt.textSize || 20;
     this.backgroundCol = opt.backgroundCol || Theming.SECONDARY;
-    this.outlineCol = opt.outlineCol || Theming.BORDER;
-    this.outlineHiglightCol = opt.outlineHiglightCol || Theming.BORDER_HIGHLIGHT;
+    this.cvlineCol = opt.cvlineCol || Theming.BORDER;
+    this.cvlineHiglightCol = opt.cvlineHiglightCol || Theming.BORDER_HIGHLIGHT;
     this.textCol = opt.textCol || Theming.DARK_TEXT;
     this.textFont = opt.textFont || AssetManager.instance.getFont("main");
 
@@ -70,7 +70,7 @@ export default class TextInput implements UIElement {
 
     // Init graphics
     let bounds = this.getBounds();
-    this.output = this.cv.createGraphics(bounds.size.x, bounds.size.y);
+    this.cvput = this.cv.createGraphics(bounds.size.x, bounds.size.y);
   }
 
 
@@ -108,9 +108,9 @@ export default class TextInput implements UIElement {
 
         // Add new key on other
         } else {
-          let out = String.fromCharCode(parseInt(key)).toLowerCase();
-          if (this.cv.in.keys.held[16]) out = out.toUpperCase();
-          this.text += out;
+          let cv = String.fromCharCode(parseInt(key)).toLowerCase();
+          if (this.cv.in.keys.held[16]) cv = cv.toUpperCase();
+          this.text += cv;
         }
       }
 
@@ -137,22 +137,22 @@ export default class TextInput implements UIElement {
   show() {
     let bounds = this.getBounds();
 
-    // Draw text between into the output buffer
-    this.output.background(this.backgroundCol);
-    this.output.noStroke();
-    this.output.fill(this.textCol);
-    this.output.textSize(25);
-    this.output.textFont(this.textFont);
-    this.output.textAlign(this.cv.LEFT, this.cv.BOTTOM);
-    let out = this.text;
-    if (this.selected) out += (this.inputTimer[0] > (this.inputTimer[1] * 0.5)) ? "_" : " ";
-    let outWidth = this.output.textWidth(out.substring(0, out.length - 1));
-    this.output.text(out, 4 - this.cv.max(outWidth - this.length + 12 + this.output.textWidth("_"), 0), bounds.size.y - 4);
+    // Draw text between into the cvput buffer
+    this.cvput.background(this.backgroundCol);
+    this.cvput.noStroke();
+    this.cvput.fill(this.textCol);
+    this.cvput.textSize(25);
+    this.cvput.textFont(this.textFont);
+    this.cvput.textAlign(this.cv.LEFT, this.cv.BOTTOM);
+    let cv = this.text;
+    if (this.selected) cv += (this.inputTimer[0] > (this.inputTimer[1] * 0.5)) ? "_" : " ";
+    let cvWidth = this.cvput.textWidth(cv.substring(0, cv.length - 1));
+    this.cvput.text(cv, 4 - this.cv.max(cvWidth - this.length + 12 + this.cvput.textWidth("_"), 0), bounds.size.y - 4);
     this.cv.imageMode(this.cv.CORNER);
-    this.cv.image(this.output, bounds.pos.x, bounds.pos.y);
+    this.cv.image(this.cvput, bounds.pos.x, bounds.pos.y);
 
-    // Draw outline overtop
-    this.cv.stroke(this.outlineCol);
+    // Draw cvline overtop
+    this.cv.stroke(this.cvlineCol);
     this.cv.noFill();
     this.cv.rect(bounds.pos.x, bounds.pos.y, bounds.size.x, bounds.size.y);
   }

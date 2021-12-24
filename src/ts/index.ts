@@ -3,22 +3,24 @@
 import "../index.css";
 import tokenData from "../assets/tokenData";
 import * as p5 from "p5";
-import AssetManager from "./AssetManager";
-import SoundManager from "./SoundManager";
-import { HistoryCanvas, historyCanvasFunc } from "./history/HistoryCanvas";
-import LoadingState from "./game/LoadingState";
-import MenuState from "./game/MenuState";
-import { GameCanvas, gameCanvasFunc } from "./game/GameCanvas";
-import { ChatCanvas, chatCanvasFunc } from "./chat/ChatCanvas";
+
+import AssetManager from "./managers/AssetManager";
+import SoundManager from "./managers/SoundManager";
+import { HistoryCanvas, historyCanvasFunc } from "./canvases/history/HistoryCanvas";
+import { GameCanvas, gameCanvasFunc } from "./canvases/game/GameCanvas";
+import { ChatCanvas, chatCanvasFunc } from "./canvases/chat/ChatCanvas";
+
+import LoadingState from "./canvases/game/LoadingState";
+import MenuState from "./canvases/game/menu/MenuState";
 
 
 // Declare variables
+let assetManager: AssetManager;
+let soundManager: SoundManager;
 let canvasContainer: HTMLElement;
 let historyCanvas: HistoryCanvas;
 let gameCanvas: GameCanvas;
 let chatCanvas: ChatCanvas;
-let assetManager: AssetManager;
-let soundManager: SoundManager;
 
 
 (async () => {
@@ -26,7 +28,6 @@ let soundManager: SoundManager;
   assetManager = new AssetManager();
   soundManager = new SoundManager();
   await assetManager.loadDefaults();
-
 
   // Initialize canvases
   canvasContainer = document.getElementById("canvasContainer");
@@ -40,7 +41,7 @@ let soundManager: SoundManager;
 
   // #region - Add assets
 
-  // Add fonts
+  // Add then load fonts (for loading screen)
   assetManager.addFont("main", "fonts/Montserrat-Regular.ttf");
   await assetManager.loadAll();
 
@@ -68,7 +69,7 @@ let soundManager: SoundManager;
   soundManager.addSound("sfx", "click0", "sounds/sfx/click0.mp3");
   soundManager.addSound("sfx", "click1", "sounds/sfx/click1.mp3");
   soundManager.addSound("sfx", "click2", "sounds/sfx/click2.mp3");
-  soundManager.addSound("music", "main", "sounds/music/lofiMusic.mp3");
+  // soundManager.addSound("music", "main", "sounds/music/lofiMusic.mp3");
 
   // #endregion
 
@@ -76,11 +77,13 @@ let soundManager: SoundManager;
   // Use loadState to load assets then go to menu
   gameCanvas.states.push(new LoadingState(
     gameCanvas,
+
     async () => {
       console.log("Loading assets...");
       await assetManager.loadAll();
       soundManager.updateVolume("global");
     },
+
     () => {
       console.log("Assets loaded.");
       gameCanvas.states.push(new MenuState(gameCanvas));

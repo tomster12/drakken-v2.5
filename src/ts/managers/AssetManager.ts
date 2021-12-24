@@ -80,36 +80,36 @@ export default class AssetManager {
     // Load each image
     for (let imageData of Object.entries(this.images)) {
       try {
-        var loadedImage = await import("../assets/" + imageData[1].path);
-        loadedImage = await loadImageAsync(cv, loadedImage.default);
-        imageData[1].loadedImage = loadedImage;
+        var image = await import("../../assets/" + imageData[1].path);
+        image = await loadImageAsync(cv, image.default);
+        imageData[1].loadedImage = image;
 
       } catch (e) {
-        console.log("Could not load image " + "../assets/" + imageData[1].path);
+        console.log("Could not load image " + "../../assets/" + imageData[1].path);
       }
     }
 
     // Load each font
     for (let fontData of Object.entries(this.fonts)) {
       try {
-        var loadedFont = await import("../assets/" + fontData[1].path);
-        loadedFont = await loadFontAsync(cv, loadedFont.default);
-        fontData[1].loadedFont = loadedFont;
+        var font = await import("../../assets/" + fontData[1].path);
+        font = await loadFontAsync(cv, font.default);
+        fontData[1].loadedFont = font;
 
       } catch (e) {
-        console.log("Could not load font " + "../assets/" + fontData[1].path);
+        console.log("Could not load font " + "../../assets/" + fontData[1].path);
       }
     }
 
     // Load each sound
     for (let soundData of Object.entries(this.sounds)) {
       try {
-        var loadedSound = await import("../assets/" + soundData[1].path);
-        loadedSound = await loadSoundAsync(cv, loadedSound.default);
-        soundData[1].loadedSound = loadedSound;
+        var sound = await import("../../assets/" + soundData[1].path);
+        sound = await loadSoundAsync(cv, sound.default);
+        soundData[1].loadedSound = sound;
 
       } catch (e) {
-        console.log("Could not load sound " + "../assets/" + soundData[1].path);
+        console.log("Could not load sound " + "../../assets/" + soundData[1].path);
       }
     }
   }
@@ -119,13 +119,15 @@ export default class AssetManager {
     // Image does not exist
     if (!this.images.hasOwnProperty(name)) {
       // console.log("Image does not exist");
-      return this.getImage("default");
+      if (name != "default") return this.getImage("default");
+      else return;
     }
 
     // Image not loaded
     if (this.images[name].loadedImage == null) {
       // console.log("Image has not loaded");
-      return this.getImage("default");
+      if (name != "default") return this.getImage("default");
+      else return;
     }
 
     // Return image
@@ -137,13 +139,15 @@ export default class AssetManager {
     // Font does not exist
     if (!this.fonts.hasOwnProperty(name)) {
       // console.log("Font does not exist");
-      return this.getFont("default");
+      if (name != "default") return this.getFont("default");
+      else return;
     }
 
     // Font not loaded
     if (this.fonts[name].loadedFont == null) {
       // console.log("Font has not loaded");
-      return this.getFont("default");
+      if (name != "default") return this.getFont("default");
+      else return;
     }
 
     // Return font
@@ -155,13 +159,15 @@ export default class AssetManager {
     // Sound does not exist
     if (!this.sounds.hasOwnProperty(name)) {
       // console.log("Sound does not exist");
-      return this.getSound("default");
+      if (name != "default") return this.getSound("default");
+      else return;
     }
 
     // Sound not loaded
     if (this.sounds[name].loadedSound == null) {
       // console.log("Sound has not loaded");
-      return this.getSound("default");
+      if (name != "default") return this.getSound("default");
+      else return;
     }
 
     // Return image

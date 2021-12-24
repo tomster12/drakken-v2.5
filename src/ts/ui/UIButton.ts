@@ -1,21 +1,18 @@
 
 // Imports
-import SoundManager from "../SoundManager";
 import * as p5 from "p5";
-import Canvas from "../Canvas";
-import Vec2 from "../utility/Vec2";
+import { Canvas } from "../Canvas";
+import SoundManager from "../managers/SoundManager";
 import Theming from "../utility/Theming";
-import { Bounds, UIElement } from "./UIElement";
+import { UIRect_cfg, UIRect } from "./UIRect";
 
 
 // Constructor parameters
-interface ButtonOptions {
+export interface UIButton_cfg extends UIRect_cfg {
+
   cv: Canvas;
   func: () => void;
 
-  pos: Vec2;
-  size: Vec2;
-  align?: p5.CORNER | p5.CENTER;
   text?: string;
   col?: string;
   highlightCol?: string;
@@ -23,14 +20,12 @@ interface ButtonOptions {
 }
 
 
-export default class Button implements UIElement {
+export class UIButton extends UIRect {
 
   // Declare variables
   cv: Canvas;
   func: () => void;
 
-  pos: Vec2;
-  size: Vec2;
   align: p5.CORNER | p5.CENTER;
   text: string;
   col: string;
@@ -40,13 +35,12 @@ export default class Button implements UIElement {
   highlighted: boolean;
 
 
-  constructor(opt: ButtonOptions) {
+  constructor(opt: UIButton_cfg) {
+    super(opt);
+
     // Init variables
-    this.cv = opt.cv;
     this.func = opt.func;
 
-    this.pos = opt.pos;
-    this.size = opt.size;
     this.align = opt.align || this.cv.CENTER;
     this.text = opt.text || "";
     this.col = opt.col || Theming.PRIMARY;
@@ -89,34 +83,7 @@ export default class Button implements UIElement {
     this.cv.text(
       this.text,
       bounds.pos.x + bounds.size.x * 0.5,
-      bounds.pos.y + bounds.size.y * 0.5);
-  }
-
-
-  isOntop(x: number, y: number): boolean {
-    // Returns whether a point is overtop this button
-    let bounds = this.getBounds();
-    return ((x > bounds.pos.x)
-      && x < (bounds.pos.x + bounds.size.x)
-      && y > (bounds.pos.y)
-      && y < (bounds.pos.y + bounds.size.y));
-  }
-
-
-  getBounds(): Bounds {
-    // Position represents corner
-    if (this.align == this.cv.CORNER) {
-      return {
-        pos: this.pos,
-        size: this.size
-      }
-
-    // Position represents centre
-    } else if (this.align == this.cv.CENTER) {
-      return {
-        pos: this.pos.sub(this.size.scale(0.5)),
-        size: this.size
-      };
-    }
+      bounds.pos.y + bounds.size.y * 0.5
+    );
   }
 }

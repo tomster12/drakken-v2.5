@@ -1,15 +1,14 @@
 
 // Imports
-import SoundManager from "../SoundManager";
-import { GameCanvas } from "./GameCanvas";
-import State from "./State";
-import RoomState from "./RoomState";
+import { GameCanvas } from "./../GameCanvas";
+import State from "./../State";
+import PregameState from "./PregameState";
 import SettingsState from "./SettingsState";
 import HelpState from "./HelpState";
-import Theming from "../utility/Theming";
-import Vec2 from "../utility/Vec2";
-import { UIElement } from "../ui/UIElement";
-import Button from "../ui/Button";
+import Theming from "../../../utility/Theming";
+import Vec2 from "../../../utility/Vec2";
+import { UIElement } from "../../../UI/UIElement";
+import { UIButton } from "../../../UI/UIButton";
 
 
 export default class MenuState extends State {
@@ -25,19 +24,19 @@ export default class MenuState extends State {
     this.UIElements = [];
 
     // Populate UIElements
-    this.UIElements.push(new Button({ cv: this.cv,
-      func: () => { this.cv.states.push(new RoomState(this.cv)); },
+    this.UIElements.push(new UIButton({ cv: this.cv,
+      func: () => { this.cv.states.push(new PregameState(this.cv)); },
       pos: new Vec2(this.cv.width * 0.5, this.cv.height * 0.5 - 10),
       size: new Vec2(250, 90),
       text: "Play"
     }));
-    this.UIElements.push(new Button({ cv: this.cv,
+    this.UIElements.push(new UIButton({ cv: this.cv,
       func: () => { this.cv.states.push(new SettingsState(this.cv)); },
       pos: new Vec2(this.cv.width * 0.5, this.cv.height * 0.5 + 100),
       size: new Vec2(250, 90),
       text: "Settings"
     }));
-    this.UIElements.push(new Button({ cv: this.cv,
+    this.UIElements.push(new UIButton({ cv: this.cv,
       func: () => { this.cv.states.push(new HelpState(this.cv)); },
       pos: new Vec2(this.cv.width * 0.5, this.cv.height * 0.5 + 210),
       size: new Vec2(250, 90),
@@ -45,7 +44,7 @@ export default class MenuState extends State {
     }));
 
     // Start music
-    SoundManager.instance.loopSound("music", "main");
+    // SoundManager.instance.loopSound("music", "main");
   }
 
 
