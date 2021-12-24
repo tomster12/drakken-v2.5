@@ -61,7 +61,7 @@ export default class UITextbox extends UIRect {
   }
 
 
-  static splitText(cv: Canvas, inp: string, sx: number): string[] {
+  static splitText(cv: Canvas | p5, inp: string, sx: number): string[] {
     // Split into lines based on textSize / font
     let spaceWidth = cv.textWidth(" ");
     let out = [];
