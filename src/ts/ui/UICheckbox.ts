@@ -1,8 +1,8 @@
 
 // Imports
-import { Canvas } from "../Canvas";
-import SoundManager from "../managers/SoundManager";
-import Theming from "../utility/Theming";
+import { Canvas } from "./../Canvas";
+import SoundManager from "./../managers/SoundManager";
+import Theming from "./../utility/Theming";
 import { UIRect_cfg, UIRect } from "./UIRect";
 
 

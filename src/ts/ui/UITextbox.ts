@@ -1,8 +1,8 @@
 
 // Imports
 import * as p5 from "p5";
-import { Canvas } from "../Canvas";
-import Theming from "../utility/Theming";
+import { Canvas } from "./../Canvas";
+import Theming from "./../utility/Theming";
 import { UIRect_cfg, UIRect } from "./UIRect";
 
 

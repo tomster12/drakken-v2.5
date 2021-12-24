@@ -1,14 +1,14 @@
 
 // Imports
-import SoundManager from "../../../managers/SoundManager";
+import SoundManager from "./../../../managers/SoundManager";
 import { GameCanvas } from "./../GameCanvas";
 import State from "./../State";
-import Theming from "../../../utility/Theming";
-import Vec2 from "../../../utility/Vec2";
-import { UIElement } from "../../../UI/UIElement";
-import { UIButton } from "../../../UI/UIButton";
-import UISlider from "../../../UI/UISlider";
-import UITextbox from "../../../UI/UITextbox";
+import Theming from "./../../../utility/Theming";
+import Vec2 from "./../../../utility/Vec2";
+import { UIElement } from "./../../../UI/UIElement";
+import { UIButton } from "./../../../UI/UIButton";
+import UISlider from "./../../../UI/UISlider";
+import UITextbox from "./../../../UI/UITextbox";
 
 
 export default class SettingsState extends State {

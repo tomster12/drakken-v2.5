@@ -1,11 +1,11 @@
 
 // Imports
 import * as p5 from "p5";
-import AssetManager from "../managers/AssetManager";
-import SoundManager from "../managers/SoundManager";
-import { Canvas } from "../Canvas";
-import Vec2 from "../utility/Vec2";
-import Theming from "../utility/Theming";
+import AssetManager from "./../managers/AssetManager";
+import SoundManager from "./../managers/SoundManager";
+import { Canvas } from "./../Canvas";
+import Vec2 from "./../utility/Vec2";
+import Theming from "./../utility/Theming";
 import { Bounds, UIElement } from "./UIElement";
 
 

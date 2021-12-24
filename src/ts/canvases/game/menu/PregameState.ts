@@ -1,17 +1,17 @@
 
 // Imports
 import * as p5 from "p5";
-import tokenData from "../../../../assets/tokenData";
-import AssetManager from "../../../managers/AssetManager";
-import SoundManager from "../../../managers/SoundManager";
-import Theming from "../../../utility/Theming";
+import tokenData from "./../../../../assets/tokenData";
+import AssetManager from "./../../../managers/AssetManager";
+import SoundManager from "./../../../managers/SoundManager";
+import Theming from "./../../../utility/Theming";
 
-import { Canvas } from "../../../Canvas";
+import { Canvas } from "./../../../Canvas";
 import { GameCanvas } from "./../GameCanvas";
-import { UIElement } from "../../../UI/UIElement";
-import { UIRect_cfg, UIRect } from "../../../UI/UIRect";
-import { UIButton } from "../../../UI/UIButton";
-import Vec2 from "../../../utility/Vec2";
+import { UIElement } from "./../../../UI/UIElement";
+import { UIRect_cfg, UIRect } from "./../../../UI/UIRect";
+import { UIButton } from "./../../../UI/UIButton";
+import Vec2 from "./../../../utility/Vec2";
 import State from "./../State";
 
 

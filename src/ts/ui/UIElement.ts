@@ -1,7 +1,7 @@
 
 import * as p5 from "p5";
-import { Canvas } from "../Canvas";
-import Vec2 from "../utility/Vec2";
+import { Canvas } from "./../Canvas";
+import Vec2 from "./../utility/Vec2";
 
 
 export type Bounds = {

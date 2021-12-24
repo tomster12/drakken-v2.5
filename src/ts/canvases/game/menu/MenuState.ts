@@ -5,10 +5,10 @@ import State from "./../State";
 import PregameState from "./PregameState";
 import SettingsState from "./SettingsState";
 import HelpState from "./HelpState";
-import Theming from "../../../utility/Theming";
-import Vec2 from "../../../utility/Vec2";
-import { UIElement } from "../../../UI/UIElement";
-import { UIButton } from "../../../UI/UIButton";
+import Theming from "./../../../utility/Theming";
+import Vec2 from "./../../../utility/Vec2";
+import { UIElement } from "./../../../UI/UIElement";
+import { UIButton } from "./../../../UI/UIButton";
 
 
 export default class MenuState extends State {

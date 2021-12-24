@@ -1,6 +1,6 @@
 
 // imports
-import { Canvas } from "../Canvas";
+import { Canvas } from "./../Canvas";
 
 
 // Storage for keys / mouse booleans

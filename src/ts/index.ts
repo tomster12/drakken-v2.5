@@ -1,7 +1,7 @@
 
 // Imports
-import "../index.css";
-import tokenData from "../assets/tokenData";
+import "./../index.css";
+import tokenData from "./../assets/tokenData";
 import * as p5 from "p5";
 
 import AssetManager from "./managers/AssetManager";

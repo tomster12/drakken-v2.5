@@ -80,36 +80,36 @@ export default class AssetManager {
     // Load each image
     for (let imageData of Object.entries(this.images)) {
       try {
-        var image = await import("../../assets/" + imageData[1].path);
+        var image = await import("./../../assets/" + imageData[1].path);
         image = await loadImageAsync(cv, image.default);
         imageData[1].loadedImage = image;
 
       } catch (e) {
-        console.log("Could not load image " + "../../assets/" + imageData[1].path);
+        console.log("Could not load image " + "./../../assets/" + imageData[1].path);
       }
     }
 
     // Load each font
     for (let fontData of Object.entries(this.fonts)) {
       try {
-        var font = await import("../../assets/" + fontData[1].path);
+        var font = await import("./../../assets/" + fontData[1].path);
         font = await loadFontAsync(cv, font.default);
         fontData[1].loadedFont = font;
 
       } catch (e) {
-        console.log("Could not load font " + "../../assets/" + fontData[1].path);
+        console.log("Could not load font " + "./../../assets/" + fontData[1].path);
       }
     }
 
     // Load each sound
     for (let soundData of Object.entries(this.sounds)) {
       try {
-        var sound = await import("../../assets/" + soundData[1].path);
+        var sound = await import("./../../assets/" + soundData[1].path);
         sound = await loadSoundAsync(cv, sound.default);
         soundData[1].loadedSound = sound;
 
       } catch (e) {
-        console.log("Could not load sound " + "../../assets/" + soundData[1].path);
+        console.log("Could not load sound " + "./../../assets/" + soundData[1].path);
       }
     }
   }

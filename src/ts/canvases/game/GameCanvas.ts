@@ -1,8 +1,8 @@
 
 // Imports
-import AssetManager from "../../managers/AssetManager";
-import { Canvas } from "../../Canvas";
-import Input from "../../utility/Input";
+import AssetManager from "./../../managers/AssetManager";
+import { Canvas } from "./../../Canvas";
+import Input from "./../../utility/Input";
 import State from "./State";
 import BottomState from "./BottomState";
 

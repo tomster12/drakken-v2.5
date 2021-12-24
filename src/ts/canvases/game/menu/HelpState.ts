@@ -2,10 +2,10 @@
 // Imports
 import { GameCanvas } from "./../GameCanvas";
 import State from "./../State";
-import Theming from "../../../utility/Theming";
-import Vec2 from "../../../utility/Vec2";
-import { UIElement } from "../../../UI/UIElement";
-import { UIButton } from "../../../UI/UIButton";
+import Theming from "./../../../utility/Theming";
+import Vec2 from "./../../../utility/Vec2";
+import { UIElement } from "./../../../UI/UIElement";
+import { UIButton } from "./../../../UI/UIButton";
 
 
 export default class HelpState extends State {
