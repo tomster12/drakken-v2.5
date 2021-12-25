@@ -9,7 +9,7 @@ export default class Vec2 {
   constructor(x: number, y?: number) {
     // Init variables
     this.x = x;
-    this.y = y || x;
+    this.y = y == null ? x : y;
   }
 
 
