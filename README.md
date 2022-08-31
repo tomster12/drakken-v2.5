@@ -1,2 +1,2 @@
-# Drakken-25
-Rework of iteration 2, using typescript and hopefully more future proof coding practices.
+# Drakken-V25
+Rework of V2, using typescript and hopefully more future proof coding practices.
