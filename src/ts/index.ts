@@ -1,7 +1,7 @@
 
 // Imports
 import "./../index.css";
-import tokenData from "./../assets/tokenData";
+import { tokenDatabase } from "./../assets/data";
 import * as p5 from "p5";
 
 import AssetManager from "./managers/AssetManager";
@@ -18,7 +18,7 @@ import MenuState from "./canvases/game/menu/MenuState";
 let assetManager: AssetManager;
 let soundManager: SoundManager;
 let canvasContainer: HTMLElement;
-let historyCanvas: HistoryCanvas;
+// let historyCanvas: HistoryCanvas;
 let gameCanvas: GameCanvas;
 let chatCanvas: ChatCanvas;
 
@@ -31,10 +31,10 @@ let chatCanvas: ChatCanvas;
 
   // Initialize canvases
   canvasContainer = document.getElementById("canvasContainer");
-  historyCanvas = new p5(historyCanvasFunc, canvasContainer) as HistoryCanvas;
+  // historyCanvas = new p5(historyCanvasFunc, canvasContainer) as HistoryCanvas;
   gameCanvas = new p5(gameCanvasFunc, canvasContainer) as GameCanvas;
   chatCanvas = new p5(chatCanvasFunc, canvasContainer) as ChatCanvas;
-  historyCanvas.element = canvasContainer;
+  // historyCanvas.element = canvasContainer;
   gameCanvas.element = canvasContainer;
   chatCanvas.element = canvasContainer;
 
@@ -47,14 +47,14 @@ let chatCanvas: ChatCanvas;
 
 
   // Add token images
-  for (let rarity of Object.entries(tokenData.tokens.neutral)) {
+  for (let rarity of Object.entries(tokenDatabase.tokens.neutral)) {
     for (let token of rarity[1]) {
       let name = "neutral/" + rarity[0] + "/" + token.name;
       let path = "images/tokens/neutral/" + rarity[0] + "/" + token.name.toLowerCase().replace(" ", "") + ".png";
       assetManager.addImage(name, path);
     }
   }
-  for (let clss of Object.entries(tokenData.tokens.classes)) {
+  for (let clss of Object.entries(tokenDatabase.tokens.classes)) {
     for (let rarity of Object.entries(clss[1])) {
       for (let token of rarity[1]) {
         let name = "class/" + clss[0] + "/" + rarity[0] + "/" + token.name;

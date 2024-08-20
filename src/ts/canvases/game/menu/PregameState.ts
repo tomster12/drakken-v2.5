@@ -1,7 +1,7 @@
 
 // Imports
 import * as p5 from "p5";
-import tokenData from "./../../../../assets/tokenData";
+import { classDatabase, tokenDatabase } from "./../../../../assets/data";
 import AssetManager from "./../../../managers/AssetManager";
 import SoundManager from "./../../../managers/SoundManager";
 import Theming from "./../../../utility/Theming";
@@ -38,7 +38,8 @@ class ClassOptionToken extends UIRect {
     this.optList = opt.optList;
     this.toggled = false;
     this.name = opt.name;
-    this.image = AssetManager.instance.getImage(this.name);
+    let firstName = tokenDatabase.tokens.classes[this.name][0];
+    this.image = AssetManager.instance.getImage("classes/" + this.name + "/" + firstName);
   }
 
 
@@ -50,7 +51,8 @@ class ClassOptionToken extends UIRect {
       if (this.isOntop(relMousePos.x, relMousePos.y)) {
         if (!this.toggled) this.select();
       } else this.toggled = false;
-    }
+
+    } else if (this.optList.cv.in.mouse.pressed[this.cv.LEFT]) this.toggled = false;
   }
 
 
@@ -113,12 +115,12 @@ class ClassOptionList extends UIRect {
     this.tokenSpacing = this.size.y * 0.2;
     this.tokens = [];
     for (let i = 0; i < 5; i++) {
-      for (let token of tokenData.tokens.neutral.common) {
+      for (let clss in classDatabase.classes) {
         this.tokens.push(new ClassOptionToken({ cv: this.output,
           optList: this,
           pos: new Vec2(0, 0),
           size: new Vec2(this.size.y, this.size.y),
-          name: "neutral/common/" + token.name,
+          name: classDatabase.classes[clss].name.toLowerCase(),
           align: this.cv.CORNER
         }));
       }
@@ -194,6 +196,7 @@ class ClassInfo extends UIRect {
 
   // Declare variables
   pregame: PregameState;
+  class: string;
 
 
   constructor(opt: ClassInfo_cfg) {
@@ -207,15 +210,18 @@ class ClassInfo extends UIRect {
   show() {
     // Ensure class selected and get bounds
     if (this.pregame.selectedClass == null) return;
+    this.class = this.pregame.selectedClass;
     let bounds = this.getBounds();
 
     // Show name of class
     this.cv.textAlign(this.cv.LEFT, this.cv.TOP);
     this.cv.fill(Theming.DARK_TEXT);
+
     this.cv.textSize(35);
-    this.cv.text(this.pregame.selectedClass, bounds.pos.x, bounds.pos.y);
+    this.cv.text(classDatabase.classes[this.class].name, bounds.pos.x, bounds.pos.y);
+
     this.cv.textSize(20);
-    this.cv.text("This will be the description for the selected class.", bounds.pos.x, bounds.pos.y + 35 + 20);
+    this.cv.text(classDatabase.classes[this.class].description, bounds.pos.x, bounds.pos.y + 35 + 40);
   }
 }
 
@@ -249,7 +255,7 @@ export default class PregameState extends State {
     this.UIElements.push(new ClassInfo({ cv: this.cv,
       pregame: this,
       pos: new Vec2(50, 150),
-      size: new Vec2(this.cv.width - 100, this.cv.height - 382.5),
+      size: new Vec2(this.cv.width - 100, this.cv.height - 380),
       align: this.cv.CORNER
     }));
   }
